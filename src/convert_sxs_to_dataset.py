@@ -14,14 +14,14 @@ import sys
 try:
     from sources.load_sxs import load_sxs_signal
 except ImportError:
-    print("❌ Не удалось импортировать load_sxs_signal")
-    print("💡 Убедись, что скрипт лежит в папке GW_Detector рядом с sources/")
+    print(" Не удалось импортировать load_sxs_signal")
+    print("Проверьте корректность расположения файла")
     sys.exit(1)
 
 def create_two_detector_data(sxs_strain, sxs_time, delay_samples=50, noise_level=1e-22):
-    """
-    Создаёт данные двух детекторов из одного SXS сигнала
-    """
+    
+    #Создаёт данные двух детекторов из одного SXS сигнала
+   
     n_samples = len(sxs_strain)
     
     # Детектор 1: сигнал + шум
@@ -60,18 +60,18 @@ def main():
     
     args = parser.parse_args()
 
-    print(f"🚀 Загрузка SXS симуляции: {args.sxs_id}")
+    print(f" Загрузка SXS симуляции: {args.sxs_id}")
     
     try:
         data = load_sxs_signal(args.sxs_id)
     except Exception as e:
-        print(f"❌ Ошибка загрузки SXS: {e}")
+        print(f" Ошибка загрузки SXS: {e}")
         sys.exit(1)
     
     sxs_time = data['time']
     sxs_strain = data['strain']
     
-    print(f"📊 Исходные данные: {len(sxs_strain)} отсчётов")
+    print(f" Исходные данные: {len(sxs_strain)} отсчётов")
     
     # Находим пик сигнала
     peak_idx = np.argmax(np.abs(sxs_strain))
@@ -112,7 +112,7 @@ def main():
         'TimeShift_s': 0.0
     })
     
-    # 🔧 Логика сохранения в отдельную папку
+    #  Логика сохранения в отдельную папку
     # 1. Создаем папку, если её нет
     os.makedirs(args.output_dir, exist_ok=True)
     
@@ -122,10 +122,10 @@ def main():
     # 3. Сохраняем
     df.to_csv(full_path, index=False, float_format='%.15e')
     
-    print(f"\n✅ Готово!")
-    print(f"📁 Файл сохранён: {full_path}")
-    print(f"📡 Приблизительный SNR: {df['SNR'].iloc[0]:.2f}")
-    print(f"\n💡 Теперь можешь запустить анализ:")
+    print(f"\n Готово!")
+    print(f" Файл сохранён: {full_path}")
+    print(f" Приблизительный SNR: {df['SNR'].iloc[0]:.2f}")
+    print(f"\n Теперь можете запустить анализ:")
     print(f"   python predict.py --id custom --folder test")
     print(f"   (или просто перемести файл в нужное место)")
 

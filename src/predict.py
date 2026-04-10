@@ -51,8 +51,7 @@ class GWClassifier(nn.Module):
 
 def load_model(model_path, device):
     if not os.path.exists(model_path):
-        print(f"❌ Модель не найдена: {model_path}")
-        print("💡 Сначала запусти обучение: python train_gw_net.py")
+        print(f" Модель не найдена: {model_path}")
         sys.exit(1)
     
     model = GWClassifier().to(device)
@@ -98,7 +97,7 @@ def plot_result(data_norm, probability, label_pred, confidence, status, output_p
     
     if output_path:
         plt.savefig(output_path, dpi=150, facecolor='#0d1117')
-        print(f"💾 График сохранён: {output_path}")
+        print(f" График сохранён: {output_path}")
     else:
         plt.show()
 
@@ -129,7 +128,7 @@ def main():
         filepath = f"dataset/{args.folder}/sample_{args.id}.csv"
         source_info = f"Образец #{args.id} из папки '{args.folder}'"
     else:
-        print("❌ Ошибка: укажите либо --id, либо --file")
+        print(" Ошибка: укажите либо --id, либо --file")
         print("Примеры:")
         print("  python predict.py --id 123 --folder test")
         print("  python predict.py --file sxs_datasets/bbh_test1.csv")
@@ -137,14 +136,14 @@ def main():
 
     # Проверка существования файла
     if not os.path.exists(filepath):
-        print(f"❌ Файл не найден: {filepath}")
+        print(f" Файл не найден: {filepath}")
         sys.exit(1)
 
     # Загрузка модели
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = load_model('models/best_gw_model.pth', device)
     
-    print(f"🔍 Анализ: {source_info}")
+    print(f" Анализ: {source_info}")
     
     # Предобработка и предсказание
     data_norm, df = preprocess_data(filepath)

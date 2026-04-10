@@ -36,7 +36,7 @@ def parse_args():
 def load_and_visualize(filepath, source_info, output_path=None):
     """Загрузка CSV и построение графиков"""
     if not os.path.exists(filepath):
-        print(f"❌ Файл не найден: {filepath}")
+        print(f" Файл не найден: {filepath}")
         sys.exit(1)
         
     df = pd.read_csv(filepath)
@@ -169,7 +169,7 @@ def main():
         filepath = f"dataset/{args.folder}/sample_{args.id}.csv"
         source_info = f"Образец #{args.id} из папки '{args.folder}'"
     else:
-        print("❌ Ошибка: укажите либо --id, либо --file")
+        print(" Ошибка: укажите либо --id, либо --file")
         print("Примеры:")
         print("  python data_view.py --id 42 --folder train")
         print("  python data_view.py --file sxs_datasets/bbh_test1.csv")

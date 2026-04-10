@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-Обучение 1D-CNN для классификации ГВ (Финальная рабочая версия)
-"""
+
 
 import os
 import sys
@@ -109,7 +107,7 @@ def validate(model, loader, device):
     return total_loss / total, acc, auc
 
 def main():
-    print("🚀 Запуск обучения (Финальная версия)")
+    print(" Запуск обучения ")
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f" Устройство: {device}")
     
@@ -117,21 +115,21 @@ def main():
         train_dataset = GWDataset('dataset/train')
         val_dataset = GWDataset('dataset/test')
     except Exception as e:
-        print(f"❌ Ошибка: {e}")
+        print(f" Ошибка: {e}")
         sys.exit(1)
 
     train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0)
     val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False, num_workers=0)
 
-    print(f"📂 Train: {len(train_dataset)} | Test: {len(val_dataset)}")
+    print(f" Train: {len(train_dataset)} | Test: {len(val_dataset)}")
 
     # Быстрая проверка нормализации
     sample_data, _ = next(iter(train_loader))
-    print(f"📊 Min/Max входных данных: {sample_data.min().item():.3f} / {sample_data.max().item():.3f}")
+    print(f" Min/Max входных данных: {sample_data.min().item():.3f} / {sample_data.max().item():.3f}")
     if sample_data.abs().max().item() < 0.5:
-        print("⚠️ Данные слишком маленькие. Проверь генератор.")
+        print(" Данные слишком маленькие. Проверь генератор.")
     else:
-        print("✅ Данные готовы. Запуск обучения...")
+        print(" Данные готовы. Запуск обучения...")
 
     model = GWClassifier().to(device)
     criterion = nn.BCEWithLogitsLoss()
